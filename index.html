@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Logística y Distribución UTMACH</title>
+    <style>
+        :root {
+            --primary: #0056b3;
+            --secondary: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f1f5f9;
+            color: var(--dark);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            color: var(--primary);
+            margin: 0 0 5px 0;
+            font-size: 1.8rem;
+        }
+
+        header p {
+            margin: 0;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            color: var(--primary);
+            border-bottom: 1px solid #cbd5e1;
+            padding-bottom: 8px;
+        }
+
+        form {
+            display: grid;
+            gap: 12px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        input, select, button {
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: #004085;
+        }
+
+        .btn-success { background-color: var(--secondary); }
+        .btn-success:hover { background-color: #1e7e34; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.88rem;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background-color: #e2e8f0;
+            color: var(--dark);
+        }
+
+        .badge {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .bg-danger { background-color: #f8d7da; color: #721c24; }
+        .bg-success { background-color: #d4edda; color: #155724; }
+        .bg-warning { background-color: #fff3cd; color: #856404; }
+        .bg-info { background-color: #d1ecf1; color: #0c5460; }
+
+        .console-log {
+            background: #0f172a;
+            color: #38bdf8;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 15px;
+            border-radius: 6px;
+            max-height: 250px;
+            overflow-y: auto;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>SISTEMA INTELIGENTE DE LOGÍSTICA Y DISTRIBUCIÓN</h1>
+        <p>Empresas de Machala - UTMACH TI | Grupo 4 - Paralelo B</p>
+    </header>
+
+    <div class="grid-2">
+        <div class="card">
+            <h2>Registrar Nuevo Pedido</h2>
+            <form id="formPedido">
+                <div>
+                    <label>Código del Pedido:</label>
+                    <input type="number" id="pedCodigo" placeholder="Ej: 5001" required>
+                </div>
+                <div>
+                    <label>Sector de Entrega:</label>
+                    <select id="pedSector">
+                        <option value="1">Centro (Almacén)</option>
+                        <option value="2">Norte</option>
+                        <option value="3">Sur</option>
+                        <option value="4">Este</option>
+                        <option value="5">Puerto Bolívar</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Producto:</label>
+                    <select id="pedProdCod">
+                        <option value="101">101 - Caja de Banano (18kg)</option>
+                        <option value="102">102 - Saco de Café (60kg)</option>
+                        <option value="103">103 - Caja de Camarón (22kg)</option>
+                        <option value="104">104 - Saco de Arroz (50kg)</option>
+                        <option value="105">105 - Caja de Cacao (25kg)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Cantidad:</label>
+                    <input type="number" id="pedCantidad" min="1" placeholder="Ej: 5" required>
+                </div>
+                <div>
+                    <label>Prioridad:</label>
+                    <select id="pedPrioridad">
+                        <option value="1">1: Urgente</option>
+                        <option value="2">2: Normal</option>
+                    </select>
+                </div>
+                <button type="button" onclick="registrarPedido()">Registrar Pedido</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Panel de Operaciones</h2>
+            <p>Ejecuta la planificación inteligente de rutas y simula los despachos:</p>
+            <button class="btn-success" style="width: 100%; margin-bottom: 10px;" onclick="planificarRutas()">
+                Planificar y Asignar Rutas
+            </button>
+            <button style="width: 100%; background-color: #6f42c1;" onclick="simularEntregas()">
+                Simular Despacho y Entregas
+            </button>
+            
+            <h3 style="margin-top: 15px; font-size: 1rem;">Historial de Log e Inteligencia:</h3>
+            <div id="consoleLog" class="console-log">El sistema está listo...</div>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="card">
+            <h2>Inventario de Mercancías</h2>
+            <table id="tablaInventario">
+                <thead>
+                    <tr><th>Cód</th><th>Producto</th><th>Stock</th><th>Estado</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Estado de la Flota Vehicular</h2>
+            <table id="tablaFlota">
+                <thead>
+                    <tr><th>Cód</th><th>Capacidad</th><th>Carga</th><th>Estado</th><th>Entregas</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Pedidos Registrados</h2>
+        <table id="tablaPedidos">
+            <thead>
+                <tr>
+                    <th>Cód</th>
+                    <th>Sector</th>
+                    <th>Prod.</th>
+                    <th>Cant.</th>
+                    <th>Prio.</th>
+                    <th>Estado</th>
+                    <th>Distancia</th>
+                    <th>Tiempo Est.</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // ==========================================
+    // ESTADO DEL SISTEMA (DATOS BASE)
+    // ==========================================
+    const productos = [
+        { cod: 101, nombre: "Caja de Banano", stock: 120, min: 20, peso: 18, entregados: 0 },
+        { cod: 102, nombre: "Saco de Café", stock: 80, min: 15, peso: 60, entregados: 0 },
+        { cod: 103, nombre: "Caja de Camarón", stock: 200, min: 30, peso: 22, entregados: 0 },
+        { cod: 104, nombre: "Saco de Arroz", stock: 15, min: 25, peso: 50, entregados: 0 },
+        { cod: 105, nombre: "Caja de Cacao", stock: 50, min: 10, peso: 25, entregados: 0 }
+    ];
+
+    const flota = [
+        { cod: "V-01", capacidad: 500, cargaActual: 0, estado: "Disponible", sector: 1, entregas: 0 },
+        { cod: "V-02", capacidad: 800, cargaActual: 0, estado: "Disponible", sector: 1, entregas: 0 },
+        { cod: "V-03", capacidad: 350, cargaActual: 0, estado: "Mantenimiento", sector: 1, entregas: 0 }
+    ];
+
+    const sectores = [
+        { id: 1, nombre: "Centro (Almacén)", x: 0, y: 0 },
+        { id: 2, nombre: "Norte", x: 2, y: 5 },
+        { id: 3, nombre: "Sur", x: 3, y: -4 },
+        { id: 4, nombre: "Este", x: 5, y: 2 },
+        { id: 5, nombre: "Puerto Bolívar", x: 7, y: -3 }
+    ];
+
+    let pedidos = [];
+
+    // Matriz de distancias
+    function calcularDistancia(x1, y1, x2, y2) {
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    }
+
+    // Log para el panel
+    function logMessage(msg) {
+        const consoleElem = document.getElementById("consoleLog");
+        consoleElem.innerText += "\n> " + msg;
+        consoleElem.scrollTop = consoleElem.scrollHeight;
+    }
+
+    // ==========================================
+    // FUNCIONALIDADES
+    // ==========================================
+    function registrarPedido() {
+        const cod = parseInt(document.getElementById("pedCodigo").value);
+        const sector = parseInt(document.getElementById("pedSector").value);
+        const prodCod = parseInt(document.getElementById("pedProdCod").value);
+        const cant = parseInt(document.getElementById("pedCantidad").value);
+        const prio = parseInt(document.getElementById("pedPrioridad").value);
+
+        if (!cod || !cant || cant <= 0) {
+            alert("Por favor ingrese datos válidos.");
+            return;
+        }
+
+        if (pedidos.some(p => p.cod === cod)) {
+            alert("El código de pedido ya existe.");
+            return;
+        }
+
+        pedidos.push({
+            cod: cod,
+            sector: sector,
+            prodCod: prodCod,
+            cantidad: cant,
+            prioridad: prio,
+            estado: "Pendiente",
+            distancia: 0,
+            tiempo: 0
+        });
+
+        logMessage(`Pedido #${cod} registrado con éxito.`);
+        document.getElementById("formPedido").reset();
+        actualizarTablas();
+    }
+
+    function planificarRutas() {
+        let procesados = 0;
+
+        // Procesar primero prioridad 1 (Urgente) luego 2 (Normal)
+        [1, 2].forEach(prioActual => {
+            pedidos.forEach(p => {
+                if (p.estado === "Pendiente" && p.prioridad === prioActual) {
+                    const prod = productos.find(x => x.cod === p.prodCod);
+                    if (!prod) return;
+
+                    const pesoTotal = prod.peso * p.cantidad;
+
+                    // Verificar Stock
+                    if (prod.stock < p.cantidad) {
+                        logMessage(`ALERTA: Pedido #${p.cod} rechazado por falta de stock.`);
+                        return;
+                    }
+
+                    // Buscar Vehículo disponible
+                    let mejorVeh = null;
+                    let mejorDist = Infinity;
+
+                    flota.forEach(v => {
+                        if (v.estado === "Disponible" && (v.capacidad - v.cargaActual) >= pesoTotal) {
+                            const origen = sectores.find(s => s.id === v.sector);
+                            const destino = sectores.find(s => s.id === p.sector);
+                            const dist = calcularDistancia(origen.x, origen.y, destino.x, destino.y);
+                            if (dist < mejorDist) {
+                                mejorDist = dist;
+                                mejorVeh = v;
+                            }
+                        }
+                    });
+
+                    if (mejorVeh) {
+                        p.estado = "En Preparación";
+                        mejorVeh.estado = "En Ruta";
+                        mejorVeh.cargaActual += pesoTotal;
+                        p.distancia = mejorDist.toFixed(2);
+                        p.tiempo = (mejorDist / 40 * 60).toFixed(0); // 40 km/h a minutos
+
+                        logMessage(`Pedido #${p.cod} asignado a ${mejorVeh.cod}. Tiempo est: ${p.tiempo} min.`);
+                        procesados++;
+                    } else {
+                        logMessage(`ALERTA: Sin vehículos disponibles para el pedido #${p.cod} (${pesoTotal}kg).`);
+                    }
+                }
+            });
+        });
+
+        if (procesados === 0) logMessage("No había pedidos pendientes o vehículos disponibles.");
+        actualizarTablas();
+    }
+
+    function simularEntregas() {
+        let entregados = 0;
+        pedidos.forEach(p => {
+            if (p.estado === "En Preparación") {
+                p.estado = "Entregado";
+                const prod = productos.find(x => x.cod === p.prodCod);
+                if (prod) {
+                    prod.stock -= p.cantidad;
+                    prod.entregados += p.cantidad;
+                }
+                entregados++;
+            }
+        });
+
+        flota.forEach(v => {
+            if (v.estado === "En Ruta") {
+                v.estado = "Disponible";
+                v.cargaActual = 0;
+                v.entregas += 1;
+            }
+        });
+
+        if (entregados > 0) {
+            logMessage(`¡Se han entregado ${entregados} pedidos exitosamente!`);
+        } else {
+            logMessage("No hay despachos listos en preparación.");
+        }
+        actualizarTablas();
+    }
+
+    // ==========================================
+    // RENDERIZADO EN PANTALLA
+    // ==========================================
+    function actualizarTablas() {
+        // Tablas Inventario
+        const tbodyInv = document.querySelector("#tablaInventario tbody");
+        tbodyInv.innerHTML = productos.map(p => `
+            <tr>
+                <td>${p.cod}</td>
+                <td>${p.nombre}</td>
+                <td>${p.stock}</td>
+                <td>
+                    ${p.stock <= p.min 
+                        ? '<span class="badge bg-danger">REPOSICIÓN CRÍTICA</span>' 
+                        : '<span class="badge bg-success">STOCK ÓPTIMO</span>'}
+                </td>
+            </tr>
+        `).join("");
+
+        // Tabla Flota
+        const tbodyFlota = document.querySelector("#tablaFlota tbody");
+        tbodyFlota.innerHTML = flota.map(v => `
+            <tr>
+                <td>${v.cod}</td>
+                <td>${v.capacidad} kg</td>
+                <td>${v.cargaActual} kg</td>
+                <td>
+                    <span class="badge ${v.estado === 'Disponible' ? 'bg-success' : (v.estado === 'En Ruta' ? 'bg-warning' : 'bg-danger')}">
+                        ${v.estado}
+                    </span>
+                </td>
+                <td>${v.entregas}</td>
+            </tr>
+        `).join("");
+
+        // Tabla Pedidos
+        const tbodyPed = document.querySelector("#tablaPedidos tbody");
+        tbodyPed.innerHTML = pedidos.map(p => {
+            const sec = sectores.find(s => s.id === p.sector);
+            return `
+            <tr>
+                <td>${p.cod}</td>
+                <td>${sec ? sec.nombre : p.sector}</td>
+                <td>${p.prodCod}</td>
+                <td>${p.cantidad}</td>
+                <td>${p.prioridad === 1 ? 'Urgente' : 'Normal'}</td>
+                <td>
+                    <span class="badge ${p.estado === 'Entregado' ? 'bg-success' : (p.estado === 'En Preparación' ? 'bg-info' : 'bg-warning')}">
+                        ${p.estado}
+                    </span>
+                </td>
+                <td>${p.distancia} km</td>
+                <td>${p.tiempo} min</td>
+            </tr>
+        `}).join("");
+    }
+
+    // Inicializar tablas al cargar
+    actualizarTablas();
+</script>
+
+</body>
+</html>
